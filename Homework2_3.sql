@@ -1,6 +1,5 @@
 SELECT song_name, duration FROM song
-ORDER BY duration DESC
-LIMIT 1;
+WHERE duration = (SELECT MAX(duration) FROM song);
 
 SELECT song_name FROM song
 WHERE duration >= 210;
@@ -30,7 +29,7 @@ GROUP BY a.album_name;
 SELECT m.nickname FROM musician m
 JOIN albums_musicians am ON m.id = am.musician_id
 JOIN album a ON a.id = am.album_id
-WHERE a.year_of_release < 2020;
+WHERE m.nickname NOT IN (SELECT nickname FROM albums_musicians WHERE year_of_release = 2020);
 
 SELECT c.collection_name FROM collection c
 JOIN song_collection sc ON c.id = sc.collection_id
